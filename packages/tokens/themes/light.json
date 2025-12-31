@@ -1,0 +1,7 @@
+{
+  "$schema": "https://tr.designtokens.org/schema.json",
+  "theme": {
+    "name": { "$type": "string", "$value": "light" }
+  }
+}
+

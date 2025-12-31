@@ -1,0 +1,56 @@
+{
+  "$schema": "https://tr.designtokens.org/schema.json",
+  "color": {
+    "neutral": {
+      "0": { "$type": "color", "$value": "#ffffff" },
+      "900": { "$type": "color", "$value": "#0b0f14" }
+    },
+    "blue": {
+      "500": { "$type": "color", "$value": "#2563eb" },
+      "600": { "$type": "color", "$value": "#1d4ed8" }
+    },
+    "amber": {
+      "500": { "$type": "color", "$value": "#f59e0b" }
+    },
+    "red": {
+      "500": { "$type": "color", "$value": "#ef4444" }
+    },
+    "green": {
+      "500": { "$type": "color", "$value": "#22c55e" }
+    }
+  },
+  "space": {
+    "0": { "$type": "dimension", "$value": "0px" },
+    "1": { "$type": "dimension", "$value": "4px" },
+    "2": { "$type": "dimension", "$value": "8px" },
+    "3": { "$type": "dimension", "$value": "12px" },
+    "4": { "$type": "dimension", "$value": "16px" },
+    "6": { "$type": "dimension", "$value": "24px" },
+    "8": { "$type": "dimension", "$value": "32px" }
+  },
+  "radius": {
+    "sm": { "$type": "dimension", "$value": "6px" },
+    "md": { "$type": "dimension", "$value": "10px" },
+    "lg": { "$type": "dimension", "$value": "14px" }
+  },
+  "font": {
+    "family": {
+      "sans": {
+        "$type": "fontFamily",
+        "$value": "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, \"Apple Color Emoji\", \"Segoe UI Emoji\""
+      }
+    },
+    "size": {
+      "sm": { "$type": "dimension", "$value": "14px" },
+      "md": { "$type": "dimension", "$value": "16px" },
+      "lg": { "$type": "dimension", "$value": "18px" }
+    }
+  },
+  "shadow": {
+    "sm": {
+      "$type": "string",
+      "$value": "0px 1px 2px rgba(0,0,0,0.08)"
+    }
+  }
+}
+
