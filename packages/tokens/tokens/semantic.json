@@ -1,0 +1,38 @@
+{
+  "$schema": "https://tr.designtokens.org/schema.json",
+  "color": {
+    "bg": {
+      "canvas": { "$type": "color", "$value": "{color.neutral.0}" },
+      "surface": { "$type": "color", "$value": "{color.neutral.0}" },
+      "card": { "$type": "color", "$value": "{color.bg.surface}" }
+    },
+    "fg": {
+      "default": { "$type": "color", "$value": "{color.neutral.900}" },
+      "muted": { "$type": "color", "$value": "rgba(11,15,20,0.65)" }
+    },
+    "border": {
+      "default": { "$type": "color", "$value": "rgba(11,15,20,0.12)" }
+    },
+    "primary": {
+      "default": { "$type": "color", "$value": "{color.blue.600}" },
+      "hover": { "$type": "color", "$value": "{color.blue.500}" },
+      "fg": { "$type": "color", "$value": "{color.neutral.0}" }
+    },
+    "danger": {
+      "default": { "$type": "color", "$value": "{color.red.500}" },
+      "fg": { "$type": "color", "$value": "{color.neutral.0}" }
+    },
+    "success": {
+      "default": { "$type": "color", "$value": "{color.green.500}" },
+      "fg": { "$type": "color", "$value": "{color.neutral.0}" }
+    }
+  },
+  "shadow": {
+    "card": { "$type": "string", "$value": "{shadow.sm}" }
+  },
+  "radius": {
+    "control": { "$type": "dimension", "$value": "{radius.md}" },
+    "card": { "$type": "dimension", "$value": "{radius.control}" }
+  }
+}
+

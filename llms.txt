@@ -1,0 +1,55 @@
+# LLM Guide: llm-design-system
+
+This repo is a scaffold for a SaaS **design system** optimized for AI-assisted development.
+
+## Tech stack
+- React + TypeScript
+- Radix UI primitives (accessibility)
+- W3C-ish Design Tokens + Style Dictionary
+- Tailwind CSS (utility styling) + shadcn/ui copy-paste conventions
+- Storybook (interactive documentation)
+
+## Where things live
+- Tokens
+  - Source: `packages/tokens/tokens/*.json` and `packages/tokens/themes/*.json`
+  - Build script: `packages/tokens/style-dictionary.config.cjs`
+  - Output CSS vars: `packages/tokens/dist/css/variables.css`
+- Tailwind preset
+  - `packages/tailwind-preset/index.js`
+- UI components
+  - `packages/ui/src/components/*`
+  - Shared utilities: `packages/ui/src/lib/*`
+- Storybook
+  - `apps/storybook/.storybook/*`
+  - Stories: `apps/storybook/src/**/*.stories.tsx`
+
+## Token → UI → Docs flow
+1. Define/adjust tokens in `packages/tokens/tokens/*.json` and theme overrides in `packages/tokens/themes/*.json`.
+2. Build tokens (after deps are installed): `pnpm --filter @acme/tokens build`.
+3. Tailwind consumes CSS variables via `@acme/tailwind-preset`.
+4. Components use Tailwind classes and semantic token colors (`bg-bg-canvas`, `text-fg`, etc.).
+5. Storybook loads tokens CSS and Tailwind to document components.
+
+## Theme switching
+- Theme is controlled by `data-theme="light|dark"` on `document.documentElement`.
+- Tokens output theme-scoped CSS variables for both themes.
+- Tailwind `dark:` variant is configured to follow `[data-theme='dark']`.
+
+## Component authoring conventions (shadcn/ui style)
+- One file per component (e.g. `button.tsx`, `dialog.tsx`) with minimal indirection.
+- Use Radix primitives for accessibility and consistent keyboard behavior.
+- Prefer `cn(...)` helper for class composition (`clsx` + `tailwind-merge`).
+- Keep variants explicit (e.g. `cva` for buttons).
+
+## Add a new token (quick steps)
+1. Add to `packages/tokens/tokens/core.json` or `packages/tokens/tokens/semantic.json`.
+2. If theme-specific, override in `packages/tokens/themes/dark.json`.
+3. Rebuild tokens: `pnpm --filter @acme/tokens build`.
+4. If it should be a Tailwind utility, map it in `packages/tailwind-preset/index.js`.
+
+## Add a new component (quick steps)
+1. Create `packages/ui/src/components/<name>.tsx`.
+2. Export from `packages/ui/src/index.ts`.
+3. Add Storybook stories in `apps/storybook/src/stories/<name>.stories.tsx`.
+
+
