@@ -1,0 +1,56 @@
+{
+  "source": ["tokens.json"],
+  "platforms": {
+    "css": {
+      "transformGroup": "css",
+      "buildPath": "dist/",
+      "files": [
+        {
+          "destination": "tokens.css",
+          "format": "css/variables",
+          "options": {
+            "fileHeader": "designTokens"
+          }
+        }
+      ]
+    },
+    "typescript": {
+      "transformGroup": "js",
+      "buildPath": "dist/",
+      "files": [
+        {
+          "destination": "tokens.d.ts",
+          "format": "typescript/es6-declarations"
+        },
+        {
+          "destination": "tokens.ts",
+          "format": "typescript/es6"
+        }
+      ]
+    },
+    "json": {
+      "transformGroup": "js",
+      "buildPath": "dist/",
+      "files": [
+        {
+          "destination": "tokens.json",
+          "format": "json/nested"
+        }
+      ]
+    },
+    "tailwind": {
+      "transformGroup": "js",
+      "buildPath": "dist/",
+      "files": [
+        {
+          "destination": "tailwind.config.js",
+          "format": "javascript/module",
+          "options": {
+            "fileHeader": "tailwindConfig"
+          }
+        }
+      ]
+    }
+  }
+}
+

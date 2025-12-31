@@ -1,0 +1,178 @@
+# LLM Design System - Quick Reference
+
+## Overview
+
+This is a design system for SaaS energy industry applications, optimized for LLM accessibility. Built with React + TypeScript, Radix UI primitives, Tailwind CSS, and W3C Design Tokens.
+
+## Tech Stack
+
+- **React + TypeScript**: Component library foundation
+- **Radix UI**: Accessible, unstyled primitives
+- **Tailwind CSS**: Utility-first styling
+- **W3C Design Tokens**: Standardized design values
+- **Style Dictionary**: Token transformation
+- **Storybook**: Component documentation
+
+## Project Structure
+
+```
+packages/
+  tokens/     # Design tokens (W3C format)
+  ui/         # Component library
+apps/
+  docs/       # Storybook app
+mcp/          # MCP servers for AI integration
+```
+
+## Component Usage
+
+### Import Pattern
+
+```tsx
+import { Button, Input, Card } from '@design-system/ui';
+```
+
+### Button
+
+```tsx
+<Button variant="default" size="default">Click me</Button>
+<Button variant="outline" size="sm">Small</Button>
+<Button variant="destructive">Delete</Button>
+```
+
+Variants: `default`, `destructive`, `outline`, `secondary`, `ghost`, `link`
+Sizes: `default`, `sm`, `lg`, `icon`
+
+### Input
+
+```tsx
+<Input type="text" placeholder="Enter text..." />
+<Input type="email" placeholder="email@example.com" />
+```
+
+### Card
+
+```tsx
+<Card>
+  <CardHeader>
+    <CardTitle>Title</CardTitle>
+    <CardDescription>Description</CardDescription>
+  </CardHeader>
+  <CardContent>Content</CardContent>
+  <CardFooter>Footer</CardFooter>
+</Card>
+```
+
+### Dialog
+
+```tsx
+<Dialog>
+  <DialogTrigger>Open</DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Title</DialogTitle>
+      <DialogDescription>Description</DialogDescription>
+    </DialogHeader>
+  </DialogContent>
+</Dialog>
+```
+
+### Select
+
+```tsx
+<Select>
+  <SelectTrigger>
+    <SelectValue placeholder="Select..." />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="option1">Option 1</SelectItem>
+    <SelectItem value="option2">Option 2</SelectItem>
+  </SelectContent>
+</Select>
+```
+
+### Checkbox
+
+```tsx
+<Checkbox checked={checked} onCheckedChange={setChecked} />
+```
+
+## Design Tokens
+
+### Colors
+
+- Primary: `primary-{50-950}`
+- Secondary: `secondary-{50-950}`
+- Neutral: `neutral-{50-950}`
+- Semantic: `success-{50-700}`, `warning-{50-700}`, `error-{50-700}`, `info-{50-700}`
+- Background: `background-default`, `background-elevated`, `background-overlay`
+- Foreground: `foreground-default`, `foreground-muted`, `foreground-subtle`
+- Border: `border-default`, `border-strong`, `border-subtle`
+
+### Spacing
+
+Scale: `0`, `1` (0.25rem), `2` (0.5rem), `3`, `4` (1rem), `5`, `6`, `8`, `10`, `12`, `16`, `20`, `24`, `32`, `40`, `48`, `64`
+
+### Typography
+
+Font sizes: `xs`, `sm`, `base`, `lg`, `xl`, `2xl`, `3xl`, `4xl`, `5xl`, `6xl`
+Font weights: `normal` (400), `medium` (500), `semibold` (600), `bold` (700)
+Line heights: `none`, `tight`, `snug`, `normal`, `relaxed`, `loose`
+
+### Radius
+
+Values: `none`, `sm`, `base`, `md`, `lg`, `xl`, `2xl`, `full`
+
+## Styling Patterns
+
+### Utility Classes
+
+Use Tailwind utility classes. Merge classes with `cn()` utility:
+
+```tsx
+import { cn } from '@design-system/ui';
+
+<div className={cn('flex items-center', className)} />
+```
+
+### Component Variants
+
+Components use `class-variance-authority` (cva) for variants:
+
+```tsx
+const buttonVariants = cva('base-classes', {
+  variants: {
+    variant: { default: '...', outline: '...' },
+    size: { default: '...', sm: '...' },
+  },
+});
+```
+
+## Best Practices
+
+1. **Always use design tokens** - Never hardcode colors, spacing, or typography
+2. **Accessibility first** - All components use Radix UI primitives for accessibility
+3. **TypeScript** - All components are fully typed
+4. **Component composition** - Use shadcn/ui pattern (components live in codebase)
+5. **Energy industry focus** - Support dense UIs, high contrast, data visualization
+
+## Token Naming
+
+- Semantic naming: `color.primary.500`, `spacing.4`
+- Use scale values: `50-950` for colors, numeric for spacing
+- Reference tokens: `{color.neutral.900}` syntax in tokens.json
+
+## File Locations
+
+- Components: `packages/ui/src/components/{name}/{name}.tsx`
+- Tokens: `packages/tokens/tokens.json`
+- Stories: `packages/ui/src/components/{name}/{name}.stories.tsx`
+- Styles: `packages/ui/src/styles/globals.css`
+
+## MCP Integration
+
+Use MCP servers for:
+- Querying components: `get_component`, `list_components`
+- Accessing tokens: `get_tokens`
+- Figma sync: `sync_tokens_from_figma`, `sync_tokens_to_figma`
+

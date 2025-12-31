@@ -1,0 +1,744 @@
+# LLM Design System - Complete Documentation
+
+## Table of Contents
+
+1. Architecture Overview
+2. Design Tokens Reference
+3. Component API Reference
+4. Styling System
+5. Development Workflow
+6. Energy Industry Considerations
+7. Integration Guides
+8. MCP API Reference
+
+---
+
+## 1. Architecture Overview
+
+### Tech Stack
+
+**Core Framework**
+- React 18+ with TypeScript
+- Component-based architecture
+- Strict TypeScript mode enabled
+
+**UI Primitives**
+- Radix UI: Unstyled, accessible components
+- shadcn/ui pattern: Copy-paste components in codebase
+- All components live in `packages/ui/src/components/`
+
+**Styling**
+- Tailwind CSS 3.4+ for utility classes
+- Design tokens via W3C format
+- CSS custom properties for runtime theming
+- PostCSS with Autoprefixer
+
+**Design Tokens**
+- W3C Design Tokens Format (DTCG)
+- Style Dictionary for transformation
+- Outputs: CSS variables, TypeScript, JSON, Tailwind config
+
+**Documentation**
+- Storybook 8+ with MDX
+- Auto-generated prop tables
+- Accessibility testing addon
+- Design tokens addon
+
+**Build Tooling**
+- tsup for component library (ESM + CJS)
+- Style Dictionary for token transformation
+- pnpm workspaces for monorepo
+
+**AI Integration**
+- Model Context Protocol (MCP) servers
+- llms.txt for LLM-friendly docs
+- Component source code accessible to AI
+
+### Project Structure
+
+```
+llm-design-system/
+├── packages/
+│   ├── tokens/
+│   │   ├── tokens.json              # W3C design tokens
+│   │   ├── tokens.config.json       # Style Dictionary config
+│   │   ├── build.js                 # Build script
+│   │   └── src/index.ts             # TypeScript exports
+│   └── ui/
+│       ├── src/
+│       │   ├── components/         # Component library
+│       │   │   ├── button/
+│       │   │   │   ├── button.tsx
+│       │   │   │   ├── button.stories.tsx
+│       │   │   │   └── index.ts
+│       │   │   └── ...
+│       │   ├── lib/
+│       │   │   └── utils.ts         # Utility functions
+│       │   ├── styles/
+│       │   │   └── globals.css      # Global styles
+│       │   └── index.ts             # Public API
+│       ├── tailwind.config.ts       # Tailwind config
+│       ├── postcss.config.js        # PostCSS config
+│       └── tsup.config.ts            # Build config
+├── apps/
+│   └── docs/                        # Storybook app
+├── mcp/                             # MCP servers
+│   ├── figma-server.ts
+│   └── design-system-server.ts
+├── .storybook/                      # Storybook config
+│   ├── main.ts
+│   └── preview.ts
+├── llms.txt                         # Quick reference
+├── llms-full.txt                    # This file
+└── .cursorrules                     # Cursor IDE rules
+```
+
+---
+
+## 2. Design Tokens Reference
+
+### Token Format
+
+Tokens follow W3C Design Tokens Format (DTCG):
+
+```json
+{
+  "$schema": "https://schemas.w3.org/design-tokens/1.0",
+  "color": {
+    "primary": {
+      "500": { "$value": "#3b82f6", "$type": "color" }
+    }
+  }
+}
+```
+
+### Color Tokens
+
+**Primary Colors** (`color.primary.{50-950}`)
+- 50: Lightest tint
+- 500: Base color
+- 950: Darkest shade
+
+**Secondary Colors** (`color.secondary.{50-950}`)
+- Green-based palette for energy industry
+
+**Neutral Colors** (`color.neutral.{50-950}`)
+- Grayscale palette for UI elements
+
+**Semantic Colors**
+- Success: `color.success.{50,500,600,700}`
+- Warning: `color.warning.{50,500,600,700}`
+- Error: `color.error.{50,500,600,700}`
+- Info: `color.info.{50,500,600,700}`
+
+**Contextual Colors**
+- Background: `color.background.{default,elevated,overlay}`
+- Foreground: `color.foreground.{default,muted,subtle}`
+- Border: `color.border.{default,strong,subtle}`
+
+### Spacing Tokens
+
+Scale: `spacing.{0,1,2,3,4,5,6,8,10,12,16,20,24,32,40,48,64}`
+
+- 0: 0
+- 1: 0.25rem (4px)
+- 2: 0.5rem (8px)
+- 4: 1rem (16px)
+- 8: 2rem (32px)
+- 16: 4rem (64px)
+
+### Typography Tokens
+
+**Font Families**
+- `typography.fontFamily.sans`: System sans-serif stack
+- `typography.fontFamily.mono`: System monospace stack
+
+**Font Sizes** (`typography.fontSize.{xs,sm,base,lg,xl,2xl,3xl,4xl,5xl,6xl}`)
+- xs: 0.75rem (12px)
+- sm: 0.875rem (14px)
+- base: 1rem (16px)
+- lg: 1.125rem (18px)
+- xl: 1.25rem (20px)
+- 2xl: 1.5rem (24px)
+- 3xl: 1.875rem (30px)
+- 4xl: 2.25rem (36px)
+- 5xl: 3rem (48px)
+- 6xl: 3.75rem (60px)
+
+**Font Weights** (`typography.fontWeight.{normal,medium,semibold,bold}`)
+- normal: 400
+- medium: 500
+- semibold: 600
+- bold: 700
+
+**Line Heights** (`typography.lineHeight.{none,tight,snug,normal,relaxed,loose}`)
+- none: 1
+- tight: 1.25
+- snug: 1.375
+- normal: 1.5
+- relaxed: 1.625
+- loose: 2
+
+**Letter Spacing** (`typography.letterSpacing.{tighter,tight,normal,wide,wider,widest}`)
+
+### Radius Tokens
+
+Values: `radius.{none,sm,base,md,lg,xl,2xl,full}`
+- none: 0
+- sm: 0.125rem (2px)
+- base: 0.25rem (4px)
+- md: 0.375rem (6px)
+- lg: 0.5rem (8px)
+- xl: 0.75rem (12px)
+- 2xl: 1rem (16px)
+- full: 9999px
+
+### Shadow Tokens
+
+Values: `shadow.{sm,base,md,lg,xl,2xl,inner,none}`
+
+### Opacity Tokens
+
+Values: `opacity.{0,25,50,75,100}`
+
+### Z-Index Tokens
+
+Values: `zIndex.{0,10,20,30,40,50,auto}`
+
+### Breakpoint Tokens
+
+Values: `breakpoint.{sm,md,lg,xl,2xl}`
+- sm: 640px
+- md: 768px
+- lg: 1024px
+- xl: 1280px
+- 2xl: 1536px
+
+### Token Usage
+
+**In Tailwind:**
+```tsx
+<div className="bg-primary-500 text-white p-4 rounded-lg" />
+```
+
+**In CSS:**
+```css
+.custom-class {
+  background-color: var(--color-primary-500);
+  padding: var(--spacing-4);
+}
+```
+
+**In TypeScript:**
+```ts
+import tokens from '@design-system/tokens/tokens.json';
+const primaryColor = tokens.color.primary[500].value;
+```
+
+---
+
+## 3. Component API Reference
+
+### Button
+
+**Location:** `packages/ui/src/components/button/button.tsx`
+
+**Props:**
+```tsx
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
+  size?: 'default' | 'sm' | 'lg' | 'icon';
+  asChild?: boolean;
+}
+```
+
+**Usage:**
+```tsx
+<Button variant="default" size="default">Click me</Button>
+<Button variant="outline" size="sm">Small</Button>
+<Button variant="destructive">Delete</Button>
+<Button asChild>
+  <a href="/link">Link Button</a>
+</Button>
+```
+
+**Variants:**
+- `default`: Primary action (blue background)
+- `destructive`: Destructive action (red background)
+- `outline`: Outlined button
+- `secondary`: Secondary action (green background)
+- `ghost`: Minimal button (no background)
+- `link`: Link-style button
+
+**Sizes:**
+- `default`: h-10 px-4 py-2
+- `sm`: h-9 px-3
+- `lg`: h-11 px-8
+- `icon`: h-10 w-10 (square)
+
+### Input
+
+**Location:** `packages/ui/src/components/input/input.tsx`
+
+**Props:**
+```tsx
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+```
+
+**Usage:**
+```tsx
+<Input type="text" placeholder="Enter text..." />
+<Input type="email" placeholder="email@example.com" />
+<Input type="password" />
+<Input disabled placeholder="Disabled" />
+```
+
+### Card
+
+**Location:** `packages/ui/src/components/card/card.tsx`
+
+**Components:**
+- `Card`: Container
+- `CardHeader`: Header section
+- `CardTitle`: Title heading
+- `CardDescription`: Description text
+- `CardContent`: Main content
+- `CardFooter`: Footer section
+
+**Usage:**
+```tsx
+<Card>
+  <CardHeader>
+    <CardTitle>Card Title</CardTitle>
+    <CardDescription>Card description</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p>Content goes here</p>
+  </CardContent>
+  <CardFooter>
+    <Button>Action</Button>
+  </CardFooter>
+</Card>
+```
+
+### Dialog
+
+**Location:** `packages/ui/src/components/dialog/dialog.tsx`
+
+**Components:**
+- `Dialog`: Root component
+- `DialogTrigger`: Trigger button
+- `DialogContent`: Dialog content container
+- `DialogHeader`: Header section
+- `DialogTitle`: Title
+- `DialogDescription`: Description
+- `DialogFooter`: Footer section
+- `DialogClose`: Close button
+
+**Usage:**
+```tsx
+<Dialog>
+  <DialogTrigger>
+    <Button>Open Dialog</Button>
+  </DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Dialog Title</DialogTitle>
+      <DialogDescription>Dialog description</DialogDescription>
+    </DialogHeader>
+    <p>Dialog content</p>
+    <DialogFooter>
+      <Button variant="outline">Cancel</Button>
+      <Button>Confirm</Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+```
+
+### Select
+
+**Location:** `packages/ui/src/components/select/select.tsx`
+
+**Components:**
+- `Select`: Root component
+- `SelectTrigger`: Trigger button
+- `SelectValue`: Selected value display
+- `SelectContent`: Dropdown content
+- `SelectItem`: Option item
+- `SelectGroup`: Group of items
+- `SelectLabel`: Group label
+- `SelectSeparator`: Visual separator
+
+**Usage:**
+```tsx
+<Select>
+  <SelectTrigger>
+    <SelectValue placeholder="Select an option" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      <SelectLabel>Group 1</SelectLabel>
+      <SelectItem value="option1">Option 1</SelectItem>
+      <SelectItem value="option2">Option 2</SelectItem>
+    </SelectGroup>
+    <SelectSeparator />
+    <SelectGroup>
+      <SelectLabel>Group 2</SelectLabel>
+      <SelectItem value="option3">Option 3</SelectItem>
+    </SelectGroup>
+  </SelectContent>
+</Select>
+```
+
+### Checkbox
+
+**Location:** `packages/ui/src/components/checkbox/checkbox.tsx`
+
+**Props:**
+```tsx
+interface CheckboxProps extends React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> {}
+```
+
+**Usage:**
+```tsx
+<Checkbox checked={checked} onCheckedChange={setChecked} />
+<Checkbox disabled />
+```
+
+---
+
+## 4. Styling System
+
+### Tailwind Configuration
+
+Tailwind config extends design tokens:
+
+```ts
+import tokens from '@design-system/tokens/tailwind';
+
+export default {
+  theme: {
+    extend: {
+      colors: tokens.color,
+      spacing: tokens.spacing,
+      // ... other token mappings
+    },
+  },
+};
+```
+
+### Utility Function
+
+**cn()** - Merge Tailwind classes:
+
+```tsx
+import { cn } from '@design-system/ui';
+
+<div className={cn('base-classes', conditional && 'conditional-class', className)} />
+```
+
+Uses `clsx` and `tailwind-merge` for optimal class handling.
+
+### Component Variants
+
+Components use `class-variance-authority` (cva):
+
+```tsx
+import { cva } from 'class-variance-authority';
+
+const buttonVariants = cva('base-classes', {
+  variants: {
+    variant: {
+      default: 'bg-primary-500',
+      outline: 'border border-border-default',
+    },
+    size: {
+      default: 'h-10 px-4',
+      sm: 'h-9 px-3',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+    size: 'default',
+  },
+});
+```
+
+### CSS Custom Properties
+
+Design tokens are available as CSS variables:
+
+```css
+:root {
+  --color-primary-500: #3b82f6;
+  --spacing-4: 1rem;
+  /* ... */
+}
+```
+
+### Global Styles
+
+Located in `packages/ui/src/styles/globals.css`:
+
+- Tailwind directives
+- Base styles
+- High contrast mode support
+- Dark mode support (via CSS variables)
+
+---
+
+## 5. Development Workflow
+
+### Setup
+
+```bash
+# Install dependencies
+pnpm install
+
+# Build tokens
+pnpm build:tokens
+
+# Build UI package
+pnpm build:ui
+
+# Start Storybook
+pnpm dev
+```
+
+### Creating a New Component
+
+1. Create component directory:
+   ```
+   packages/ui/src/components/my-component/
+   ```
+
+2. Create component file:
+   ```tsx
+   // my-component.tsx
+   import { cn } from '../../lib/utils';
+   
+   export interface MyComponentProps {
+     // props
+   }
+   
+   export const MyComponent = ({ ...props }: MyComponentProps) => {
+     return <div className={cn('base-classes')}>...</div>;
+   };
+   ```
+
+3. Create index.ts:
+   ```ts
+   export { MyComponent } from './my-component';
+   export type { MyComponentProps } from './my-component';
+   ```
+
+4. Create stories file:
+   ```tsx
+   // my-component.stories.tsx
+   import type { Meta, StoryObj } from '@storybook/react';
+   import { MyComponent } from './my-component';
+   
+   const meta: Meta<typeof MyComponent> = {
+     title: 'Components/MyComponent',
+     component: MyComponent,
+   };
+   
+   export default meta;
+   type Story = StoryObj<typeof MyComponent>;
+   
+   export const Default: Story = {
+     args: {},
+   };
+   ```
+
+5. Export from `packages/ui/src/index.ts`:
+   ```ts
+   export * from './components/my-component';
+   ```
+
+### Building
+
+```bash
+# Build all packages
+pnpm build
+
+# Build specific package
+pnpm --filter tokens build
+pnpm --filter ui build
+```
+
+### Type Checking
+
+```bash
+pnpm typecheck
+```
+
+---
+
+## 6. Energy Industry Considerations
+
+### Dense UI Patterns
+
+For data-dense interfaces:
+
+```tsx
+// Use dense spacing utilities
+<div className="dense dense-spacing">
+  {/* Compact layout */}
+</div>
+```
+
+### High Contrast Support
+
+Automatic high contrast mode support via CSS:
+
+```css
+@media (prefers-contrast: high) {
+  :root {
+    --color-border-default: var(--color-neutral-400);
+  }
+}
+```
+
+### Accessibility
+
+All components use Radix UI primitives which provide:
+- Keyboard navigation
+- Screen reader support
+- ARIA attributes
+- Focus management
+
+### Data Visualization
+
+Consider adding:
+- Chart components (recharts, visx)
+- Table components with sorting/filtering
+- Dashboard layouts
+- Metric displays
+
+---
+
+## 7. Integration Guides
+
+### Using in a Next.js App
+
+1. Install package:
+   ```bash
+   pnpm add @design-system/ui @design-system/tokens
+   ```
+
+2. Import styles in `app/layout.tsx`:
+   ```tsx
+   import '@design-system/ui/styles';
+   ```
+
+3. Use components:
+   ```tsx
+   import { Button, Card } from '@design-system/ui';
+   ```
+
+### Using in a Vite App
+
+1. Install package
+2. Import styles in `main.tsx`:
+   ```tsx
+   import '@design-system/ui/styles';
+   ```
+3. Use components
+
+### Token Integration
+
+**In Tailwind config:**
+```ts
+import tokens from '@design-system/tokens/tailwind';
+
+export default {
+  theme: {
+    extend: tokens,
+  },
+};
+```
+
+**As CSS variables:**
+```tsx
+import '@design-system/tokens/tokens.css';
+```
+
+**As TypeScript:**
+```ts
+import tokens from '@design-system/tokens/tokens.json';
+```
+
+---
+
+## 8. MCP API Reference
+
+### Design System Server
+
+**Tools:**
+
+1. `list_components`
+   - Lists all available components
+   - Returns: Array of component names and files
+
+2. `get_component`
+   - Gets component source code
+   - Args: `componentName` (string)
+   - Returns: Component source code
+
+3. `get_tokens`
+   - Gets design tokens
+   - Args: `category` (optional string)
+   - Returns: Token JSON
+
+4. `search_components`
+   - Searches components by name
+   - Args: `query` (string)
+   - Returns: Matching components
+
+### Figma Server
+
+**Tools:**
+
+1. `get_figma_tokens`
+   - Gets tokens from Figma Variables
+   - Args: `fileKey` (string)
+   - Returns: Token JSON
+
+2. `sync_tokens_from_figma`
+   - Syncs tokens from Figma to code
+   - Args: `fileKey` (string)
+
+3. `sync_tokens_to_figma`
+   - Syncs tokens from code to Figma
+   - Args: `fileKey` (string)
+
+---
+
+## Best Practices
+
+1. **Always use design tokens** - Never hardcode values
+2. **Accessibility first** - All components must be accessible
+3. **TypeScript strict mode** - Full type safety
+4. **Component composition** - Build complex UIs from simple components
+5. **Documentation** - Every component needs Storybook stories
+6. **Energy industry focus** - Support dense UIs, high contrast, data visualization
+7. **LLM-friendly** - Keep code readable, use semantic naming, provide clear APIs
+
+---
+
+## File Locations Quick Reference
+
+- Components: `packages/ui/src/components/{name}/{name}.tsx`
+- Stories: `packages/ui/src/components/{name}/{name}.stories.tsx`
+- Tokens: `packages/tokens/tokens.json`
+- Styles: `packages/ui/src/styles/globals.css`
+- Utils: `packages/ui/src/lib/utils.ts`
+- Tailwind config: `packages/ui/tailwind.config.ts`
+- Storybook config: `.storybook/main.ts`, `.storybook/preview.ts`
+- MCP servers: `mcp/*.ts`
+
+---
+
+End of documentation.
+

@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Design tokens will be imported as CSS custom properties after building tokens */
+    /* Run: pnpm --filter tokens build */
+    /* Then uncomment: @import '@design-system/tokens/tokens.css'; */
+    
+    /* Base styles for energy industry SaaS */
+    color-scheme: light;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background-default text-foreground-default;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* High contrast mode support for accessibility */
+  @media (prefers-contrast: high) {
+    :root {
+      --color-border-default: var(--color-neutral-400);
+      --color-border-strong: var(--color-neutral-500);
+    }
+  }
+
+  /* Dark mode support via CSS variables */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+    }
+  }
+}
+
+@layer utilities {
+  /* Dense UI patterns for energy industry data-dense interfaces */
+  .dense {
+    @apply text-sm leading-tight;
+  }
+  
+  .dense-spacing {
+    @apply gap-1 p-1;
+  }
+}
+

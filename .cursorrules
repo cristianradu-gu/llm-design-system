@@ -1,0 +1,96 @@
+# Cursor Rules for Design System
+
+## Design System Guidelines
+
+When working with this design system:
+
+1. **Always use design tokens** - Never hardcode colors, spacing, or typography values. Use tokens from `@design-system/tokens`.
+
+2. **Use existing components** - Check `packages/ui/src/components/` before creating new components. Use Radix UI primitives for accessibility.
+
+3. **Follow component patterns** - Use the shadcn/ui pattern:
+   - Components live in `packages/ui/src/components/{name}/`
+   - Export from `index.ts`
+   - Use `cva` for variants
+   - Use `cn()` utility for class merging
+
+4. **TypeScript strict mode** - All components must be fully typed. Use proper interfaces and types.
+
+5. **Accessibility** - All components use Radix UI primitives. Don't remove accessibility features.
+
+6. **Styling** - Use Tailwind utility classes. Map to design tokens in `tailwind.config.ts`.
+
+7. **Documentation** - Create Storybook stories for all components in `{component}.stories.tsx`.
+
+8. **Energy industry focus** - Consider dense UIs, high contrast, and data visualization needs.
+
+## Import Patterns
+
+```tsx
+// Components
+import { Button, Input, Card } from '@design-system/ui';
+
+// Utilities
+import { cn } from '@design-system/ui';
+
+// Tokens (if needed)
+import tokens from '@design-system/tokens/tokens.json';
+```
+
+## Component Structure
+
+```tsx
+import * as React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '../../lib/utils';
+
+const componentVariants = cva('base-classes', {
+  variants: {
+    variant: { /* ... */ },
+    size: { /* ... */ },
+  },
+  defaultVariants: { /* ... */ },
+});
+
+export interface ComponentProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof componentVariants> {}
+
+const Component = React.forwardRef<HTMLDivElement, ComponentProps>(
+  ({ className, variant, size, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(componentVariants({ variant, size, className }))}
+        {...props}
+      />
+    );
+  }
+);
+Component.displayName = 'Component';
+
+export { Component, componentVariants };
+```
+
+## Token Usage
+
+- Colors: `bg-primary-500`, `text-foreground-default`
+- Spacing: `p-4`, `gap-2`, `m-6`
+- Typography: `text-sm`, `font-semibold`, `leading-tight`
+- Radius: `rounded-lg`, `rounded-full`
+- Shadows: `shadow-md`, `shadow-lg`
+
+## File Locations
+
+- Components: `packages/ui/src/components/{name}/`
+- Stories: `packages/ui/src/components/{name}/{name}.stories.tsx`
+- Tokens: `packages/tokens/tokens.json`
+- Styles: `packages/ui/src/styles/globals.css`
+
+## MCP Integration
+
+Use MCP tools to query components and tokens:
+- `get_component` - Get component source
+- `get_tokens` - Get design tokens
+- `list_components` - List all components
+
