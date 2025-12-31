@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System Tech Stack Research Summary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            /* max-width: 1400px; */
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background: white;
+        }
+
+        thead {
+            background: #2c3e50;
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #34495e;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: top;
+        }
+
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .llm-name {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+
+        details {
+            margin-top: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 10px;
+            background: #fafafa;
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: #2c3e50;
+            padding: 8px;
+            user-select: none;
+        }
+
+        summary:hover {
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+
+        details[open] summary {
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+        }
+
+        .details-content {
+            padding: 10px;
+            color: #555;
+        }
+
+        .details-content ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+
+        .details-content li {
+            margin-bottom: 5px;
+        }
+
+        .category-header {
+            background: #ecf0f1;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .recommendation {
+            font-weight: 500;
+            color: #27ae60;
+        }
+
+        .stats {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .stats h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 3px solid #3498db;
+        }
+
+        .stat-item strong {
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .consensus {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            border-left: 4px solid #4caf50;
+        }
+
+        .consensus h3 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .consensus ul {
+            margin-left: 20px;
+        }
+
+        .consensus li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Design System Tech Stack Research Summary</h1>
+        <p class="subtitle">
+            Research question: "Research the best tech stack for a design system. The system will be used to power a SaaS web application for the energy industry, written in TypeScript. The design system will be used by AIs (Figma Make, Cursor, others) so availability to LLMs is a big plus."
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 15%;">LLM</th>
+                    <th style="width: 15%;">Framework</th>
+                    <th style="width: 15%;">Primitives</th>
+                    <th style="width: 15%;">Styling</th>
+                    <th style="width: 15%;">Tokens</th>
+                    <th style="width: 15%;">Documentation</th>
+                    <th style="width: 10%;">Build Tool</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="llm-name">Composer-1</td>
+                    <td>
+                        <span class="recommendation">React + TypeScript</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Industry standard for SaaS applications</li>
+                                    <li>Strong TypeScript support with excellent type inference</li>
+                                    <li>Component-based architecture aligns with design system principles</li>
+                                    <li>Extensive ecosystem and community support</li>
+                                    <li>LLM-friendly: TypeScript types provide clear contracts for AI tools</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Radix UI + shadcn/ui</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Radix UI: Unstyled, accessible primitives (headless components)</li>
+                                    <li>WCAG compliant out of the box</li>
+                                    <li>Maximum flexibility for custom styling</li>
+                                    <li>shadcn/ui approach: Copy-paste component pattern</li>
+                                    <li>Components live in your codebase (not node_modules)</li>
+                                    <li>LLM-friendly: AI can read and modify component source directly</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Tailwind CSS</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Explicit class names are more readable by LLMs</li>
+                                    <li>Utility classes provide clear intent (text-lg, bg-primary-500)</li>
+                                    <li>Design tokens map directly to Tailwind config</li>
+                                    <li>Better performance (no runtime CSS-in-JS overhead)</li>
+                                    <li>Easier for AI to generate correct styling</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">W3C Design Tokens Format (JSON)</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Standard JSON structure that LLMs can easily parse</li>
+                                    <li>TypeScript types generated from tokens</li>
+                                    <li>Multi-platform support (CSS variables, iOS, Android)</li>
+                                    <li>Tools: style-dictionary or tokens-studio</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Storybook</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Industry standard for design system documentation</li>
+                                    <li>Interactive component playground</li>
+                                    <li>LLM-friendly: Stories are TypeScript/JavaScript that AI can understand</li>
+                                    <li>Auto-generates component API documentation</li>
+                                    <li>Integrates with design tokens and Figma</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Vite or Next.js</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Vite: Fast, modern, excellent TypeScript support</li>
+                                    <li>Next.js: If design system is part of larger application</li>
+                                    <li>Both support TypeScript and modern ES modules</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="llm-name">Gemini 3 Flash</td>
+                    <td>
+                        <span class="recommendation">React 19 + TypeScript</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>High-density data and strict accessibility requirements for energy industry</li>
+                                    <li>Strong TypeScript support</li>
+                                    <li>Component-based architecture</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Radix UI</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Accessible, headless primitives</li>
+                                    <li>Provides keyboard nav, ARIA labels</li>
+                                    <li>You control the styling</li>
+                                    <li>LLMs work best when they can read the source code</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Tailwind CSS</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Tailwind utility classes are highly semantic and searchable</li>
+                                    <li>AI models have been trained extensively on Tailwind</li>
+                                    <li>Much better at generating UI using utility classes than custom CSS-in-JS</li>
+                                    <li>Semantic training data: LLMs are "fluent" in Tailwind</li>
+                                    <li>Zero-context styling: styles are in HTML</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Style Dictionary (W3C Design Token Standard)</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Store design tokens in standard JSON format</li>
+                                    <li>Can provide JSON file to LLM context</li>
+                                    <li>Figma Variables + Token Studio for bi-directional sync</li>
+                                    <li>Allows AI to "know" brand rules programmatically</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Storybook (MDX) + llms.txt</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Storybook for interactive component playground</li>
+                                    <li>MDX format for rich documentation</li>
+                                    <li>llms.txt: LLM-friendly version of docs that AIs can ingest quickly</li>
+                                    <li>Model Context Protocol (MCP) for AI integration</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Not specified</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="llm-name">Gemini 3 Pro</td>
+                    <td>
+                        <span class="recommendation">React</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>The absolute highest training volume for LLMs</li>
+                                    <li>AIs write better React than Svelte or Vue due to dataset size</li>
+                                    <li>Component-based architecture</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Radix UI</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>"Headless" accessible components</li>
+                                    <li>Handles complex accessibility logic (keyboard nav, screen readers)</li>
+                                    <li>AI doesn't have to "invent" accessibility</li>
+                                    <li>Shadcn/ui pattern: components live in /components folder</li>
+                                    <li>AI can read the code, understand variant implementation, and modify it</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Tailwind CSS</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Critical choice: LLMs are exceptionally good at predicting text tokens</li>
+                                    <li>Tailwind strings are easier for AI to generate than writing new CSS classes/files</li>
+                                    <li>Standardization: AI works best with standard patterns</li>
+                                    <li>Provides rigid, predictable vocabulary</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Style Dictionary</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>JSON-based design tokens</li>
+                                    <li>Figma Variables that match Tailwind config</li>
+                                    <li>Name matching between Figma and code</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Storybook or Markdown files</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Documentation as code (Markdown/MDX) inside the repo</li>
+                                    <li>Cursor/Copilot can read it as context</li>
+                                    <li>If it's on a website, AI can't see it as easily while coding</li>
+                                    <li>.cursorrules file for AI guidelines</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Not specified</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="llm-name">GPT-5.1 Codex Max</td>
+                    <td>
+                        <span class="recommendation">React + TypeScript</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Component library built on accessible primitives</li>
+                                    <li>TypeScript for type safety</li>
+                                    <li>Strong ecosystem support</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Radix UI</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Unstyled, accessible primitives for popovers, dialogs, lists, roving focus</li>
+                                    <li>Handles dismissable layers, portal management</li>
+                                    <li>Highly accessible and well-documented</li>
+                                    <li>Ideal as the foundation</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">vanilla-extract or Panda CSS</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>CSS-vars-first approach: emit tokens as CSS custom properties</li>
+                                    <li>vanilla-extract: Zero-runtime, typed styles, great tree-shaking</li>
+                                    <li>Use recipes for variants (size, tone, state)</li>
+                                    <li>Panda CSS: Also zero/low-runtime with design-token integration</li>
+                                    <li>Tailwind as consumer opt-in: keep system CSS neutral but provide Tailwind preset</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Style Dictionary</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Author tokens in Token Studio (Figma) → export to JSON</li>
+                                    <li>Normalize/build with Style Dictionary into CSS vars, JS/TS, and platform targets</li>
+                                    <li>Keep token naming semantic (e.g., color.surface.primary)</li>
+                                    <li>Publish tokens as npm package and CDN JSON for AI consumption</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Storybook or Ladle</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Fast MDX docs with args/controls</li>
+                                    <li>Auto-generate prop tables from TS types</li>
+                                    <li>Add design-token tables and theme switcher</li>
+                                    <li>Host docs statically with public sitemap and per-story JSON for LLMs</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">tsup</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>ESM+CJS bundling</li>
+                                    <li>Preserve type declarations</li>
+                                    <li>Fast TypeScript bundling</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="llm-name">GPT-5.2</td>
+                    <td>
+                        <span class="recommendation">React + TypeScript</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Component library built on accessible primitives</li>
+                                    <li>TypeScript for type safety and better AI code generation</li>
+                                    <li>Stable contracts: TypeScript props are perfect "schema" for LLMs</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Radix UI (default) or React Aria</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Radix UI: Great default for SaaS dashboards (unstyled, accessible baseline, fast to assemble)</li>
+                                    <li>React Aria: More "accessibility-first by construction" approach</li>
+                                    <li>Both provide accessible primitives</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">CSS Variables + vanilla-extract (or CSS Modules)</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>CSS variables as runtime contract: --color-bg, --space-2, --radius-md</li>
+                                    <li>vanilla-extract: CSS-in-TS that compiles to real CSS at build time</li>
+                                    <li>Great for typed themes and centralized token usage</li>
+                                    <li>Very predictable output for SSR + component libraries</li>
+                                    <li>CSS Modules: Minimal tooling complexity, very predictable</li>
+                                    <li>Tailwind: Fine if team standardizes on it, but keep design tokens + CSS vars as source of truth</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">W3C Design Tokens (DTCG) JSON</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>DTCG JSON as canonical format</li>
+                                    <li>Explicitly designed for interchange between tools</li>
+                                    <li>JSON + JSON Schema friendly</li>
+                                    <li>Figma Variables as designer-facing authoring surface</li>
+                                    <li>Export tokens to JSON as part of pipeline</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Storybook 8 + MDX</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Storybook becomes both human docs and executable spec</li>
+                                    <li>AIs can read and run locally/CI</li>
+                                    <li>MDX docs for rich, LLM-readable documentation</li>
+                                    <li>Interaction/component testing using Storybook's testing workflow</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">tsup or vite build</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>tsup: Fast TypeScript bundling</li>
+                                    <li>vite build: Also fine</li>
+                                    <li>Both support modern ES modules</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="llm-name">Chat GPT-5.2</td>
+                    <td>
+                        <span class="recommendation">React + TypeScript</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Component library built on accessible primitives</li>
+                                    <li>TypeScript for type safety</li>
+                                    <li>Reliable for enterprise/energy applications</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Radix UI</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Unstyled, accessible React components</li>
+                                    <li>Can be customized to fit your design system</li>
+                                    <li>Ensures accessibility and provides solid foundation</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">CSS Variables + vanilla-extract (or Tailwind)</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>CSS variables + vanilla-extract: great TS ergonomics + build-time CSS</li>
+                                    <li>CSS variables + Tailwind: fast UI iteration; enforce tokens via Tailwind config + CSS vars</li>
+                                    <li>Either way: ensure all colors/spacing/typography resolve to tokens</li>
+                                    <li>So AIs have one source of truth</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">W3C Design Tokens (DTCG) JSON</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>DTCG JSON as canonical format</li>
+                                    <li>Explicitly designed for interchange between tools</li>
+                                    <li>JSON + JSON Schema friendly</li>
+                                    <li>Figma Variables as designer-facing authoring surface</li>
+                                    <li>Export tokens to JSON as part of pipeline</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Storybook 8 + MDX + llms.txt</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Storybook 8 for component workshop/docs/testing</li>
+                                    <li>MDX docs for rich, LLM-readable documentation</li>
+                                    <li>llms.txt and llms-full.txt: LLM-friendly version of docs</li>
+                                    <li>AIs can load one file and follow your rules</li>
+                                    <li>Materially improves Figma Make / Cursor / agent reliability</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">tsup or vite build</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>tsup: Fast TypeScript bundling</li>
+                                    <li>vite build: Also fine</li>
+                                    <li>Both support modern ES modules</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="llm-name">Claude Opus 4.5</td>
+                    <td>
+                        <span class="recommendation">React 18+</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Best LLM training data</li>
+                                    <li>Largest ecosystem</li>
+                                    <li>Component-based architecture</li>
+                                    <li>Strong TypeScript support</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Radix UI</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Unstyled, accessible, composable</li>
+                                    <li>Accessible baseline</li>
+                                    <li>Fast to assemble</li>
+                                    <li>Strong coverage for "dashboard UI" patterns</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Tailwind CSS + CSS Variables</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>AI-friendly: Tailwind is extremely well-represented in LLM training data</li>
+                                    <li>Utility-first = predictable: classes like px-4, text-sm, bg-primary are self-documenting</li>
+                                    <li>Design token integration: Tailwind config maps directly to design tokens</li>
+                                    <li>No CSS naming debates: reduces cognitive load for humans and AIs</li>
+                                    <li>Excellent TypeScript support with tailwind-merge and clsx</li>
+                                    <li>Small bundle size: PurgeCSS removes unused styles</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">CSS Variables + Tailwind Config</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>CSS Variables for runtime theming</li>
+                                    <li>Tailwind Config for static utilities</li>
+                                    <li>Design tokens map directly to Tailwind config</li>
+                                    <li>Hybrid approach: CSS Variables (runtime) + Tailwind (static utilities)</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Storybook 8</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Interactive docs, visual testing</li>
+                                    <li>Component workbench</li>
+                                    <li>Interactive props, a11y addons</li>
+                                    <li>Best for component documentation</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">tsup</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Fast TypeScript bundling</li>
+                                    <li>Modern build tool</li>
+                                    <li>Excellent TypeScript support</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="llm-name">Claude Sonnet 4.5</td>
+                    <td>
+                        <span class="recommendation">React + TypeScript</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Most widely adopted and AI tool-friendly</li>
+                                    <li>Strong TypeScript support for type safety</li>
+                                    <li>Excellent LLM training data availability</li>
+                                    <li>Component-based architecture aligns with design system patterns</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Radix UI</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Unstyled, accessible primitives (headless components)</li>
+                                    <li>Maximum customization and control</li>
+                                    <li>Excellent accessibility out of the box</li>
+                                    <li>Perfect for energy industry where you need custom branding</li>
+                                    <li>shadcn/ui pattern: Copy-paste components into your codebase</li>
+                                    <li>AI can easily read and modify components</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Tailwind CSS</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>LLM Training Data: Tailwind has extensive representation in AI training datasets</li>
+                                    <li>Readable Code: className="flex items-center gap-2" is more LLM-friendly than CSS-in-JS</li>
+                                    <li>Copy-Paste Components: AI can see and understand your entire component implementation</li>
+                                    <li>Figma Integration: Tailwind classes can be auto-generated from Figma designs</li>
+                                    <li>Customization: Energy industry needs custom branding, not Material Design</li>
+                                    <li>Modern: This is the direction the industry is moving in 2025</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Style Dictionary → JSON → Tailwind</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Industry standard for design token management</li>
+                                    <li>Outputs tokens in multiple formats (CSS, JSON, TypeScript)</li>
+                                    <li>AI-readable token files make it easy for LLMs to understand your design language</li>
+                                    <li>Works seamlessly with Figma plugins</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Storybook + MDX</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>De facto standard for component documentation</li>
+                                    <li>Interactive component playground</li>
+                                    <li>Generates visual documentation that both humans and AIs can parse</li>
+                                    <li>Supports TypeScript and automatic prop documentation</li>
+                                    <li>MDX format is highly readable by LLMs</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                    <td>
+                        <span class="recommendation">Vite or Rollup</span>
+                        <details>
+                            <summary>Details</summary>
+                            <div class="details-content">
+                                <ul>
+                                    <li>Modern, fast bundling</li>
+                                    <li>Excellent TypeScript support</li>
+                                    <li>ESM and CJS output for maximum compatibility</li>
+                                    <li>Simple configuration that's easy to maintain</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="stats">
+            <h2>Recommendation Consensus Analysis</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <strong>Framework:</strong>
+                    <div>React + TypeScript (8/8 - 100%)</div>
+                </div>
+                <div class="stat-item">
+                    <strong>Primitives:</strong>
+                    <div>Radix UI (8/8 - 100%)</div>
+                </div>
+                <div class="stat-item">
+                    <strong>Styling:</strong>
+                    <div>Tailwind CSS (6/8 - 75%)<br>
+                    vanilla-extract (2/8 - 25%)</div>
+                </div>
+                <div class="stat-item">
+                    <strong>Tokens:</strong>
+                    <div>W3C Design Tokens / Style Dictionary (8/8 - 100%)</div>
+                </div>
+                <div class="stat-item">
+                    <strong>Documentation:</strong>
+                    <div>Storybook (8/8 - 100%)</div>
+                </div>
+                <div class="stat-item">
+                    <strong>Build Tool:</strong>
+                    <div>tsup (4/8 - 50%)<br>
+                    Vite (3/8 - 37.5%)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="consensus">
+            <h3>Strong Consensus Recommendations</h3>
+            <ul>
+                <li><strong>React + TypeScript:</strong> Unanimous choice across all LLMs. Strong LLM training data, type safety, and component-based architecture.</li>
+                <li><strong>Radix UI:</strong> Unanimous choice for primitives. Unstyled, accessible, headless components that provide solid foundation.</li>
+                <li><strong>W3C Design Tokens / Style Dictionary:</strong> Unanimous choice. Standard JSON format that's LLM-friendly and multi-platform.</li>
+                <li><strong>Storybook:</strong> Unanimous choice for documentation. Interactive, LLM-readable, and industry standard.</li>
+                <li><strong>Tailwind CSS:</strong> Strong majority (75%) recommend Tailwind for its LLM-friendly utility classes and extensive training data.</li>
+                <li><strong>shadcn/ui pattern:</strong> Multiple LLMs recommend copy-paste component pattern for AI accessibility.</li>
+                <li><strong>Model Context Protocol (MCP):</strong> Mentioned by several LLMs as key for AI integration with Figma and Cursor.</li>
+                <li><strong>llms.txt:</strong> Recommended by multiple LLMs as a way to provide LLM-friendly documentation.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
