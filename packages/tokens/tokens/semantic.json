@@ -3,7 +3,8 @@
   "color": {
     "bg": {
       "canvas": { "$type": "color", "$value": "{color.neutral.0}" },
-      "surface": { "$type": "color", "$value": "{color.neutral.0}" }
+      "surface": { "$type": "color", "$value": "{color.neutral.0}" },
+      "card": { "$type": "color", "$value": "{color.bg.surface}" }
     },
     "fg": {
       "default": { "$type": "color", "$value": "{color.neutral.900}" },
@@ -26,8 +27,12 @@
       "fg": { "$type": "color", "$value": "{color.neutral.0}" }
     }
   },
+  "shadow": {
+    "card": { "$type": "string", "$value": "{shadow.sm}" }
+  },
   "radius": {
-    "control": { "$type": "dimension", "$value": "{radius.md}" }
+    "control": { "$type": "dimension", "$value": "{radius.md}" },
+    "card": { "$type": "dimension", "$value": "{radius.control}" }
   }
 }
 

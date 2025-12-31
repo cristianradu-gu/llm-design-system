@@ -6,7 +6,8 @@ const preset = {
       colors: {
         bg: {
           canvas: "var(--color-bg-canvas)",
-          surface: "var(--color-bg-surface)"
+          surface: "var(--color-bg-surface)",
+          card: "var(--color-bg-card)"
         },
         fg: {
           DEFAULT: "var(--color-fg-default)",
@@ -31,12 +32,14 @@ const preset = {
       },
       borderRadius: {
         control: "var(--radius-control)",
+        card: "var(--radius-card)",
         sm: "var(--radius-sm)",
         md: "var(--radius-md)",
         lg: "var(--radius-lg)"
       },
       boxShadow: {
-        sm: "var(--shadow-sm)"
+        sm: "var(--shadow-sm)",
+        card: "var(--shadow-card)"
       },
       fontFamily: {
         sans: ["var(--font-family-sans)"]
